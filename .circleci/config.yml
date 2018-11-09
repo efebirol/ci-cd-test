@@ -1,0 +1,71 @@
+# Circle CI version
+version: 2
+
+# Reference small tasks or commands to re-use them in multiple jobs
+references:
+  # Configure the base image to run the jobs in
+  setup_container: &setup_container
+    docker:
+      - image: circleci/node:10.10.0
+    working_directory: ~/
+
+# Each job is run in its own container
+# One task / pipline step per job is a good policy 
+jobs:
+
+  # This job runs setup tasks
+  # e.g. npm install, composer install, gradle build (?)
+  setup:
+    <<: *setup_container
+    steps:
+      - checkout # circle ci specific command to check out the current commit
+      - run: 
+          name: Install dependencies
+          commmand: npm install # runs a shell command
+
+  # This job runs our (unit) tests
+  test:
+    <<: *setup_container
+    steps:
+      - run: npm run test
+
+  # This job builds our application
+  build:
+    <<: *setup_container
+    steps:
+      - run: npm run build  
+
+  # This job deploys our application
+  deploy:
+    <<: *setup_container
+    steps:
+      - run: ./deploy.sh
+
+# Here we define our pipelines for different branches / tags
+workflows:
+  version: 2
+  # This workflow is triggered for all pushes
+  pull_request:
+    jobs:
+      - setup
+      - test:
+          requires:
+            - setup
+  # This workflow is triggered for push events on the master branch
+  release:
+    jobs:
+      - setup:
+          filters:
+            branches:
+              only:
+                - master
+      - test:
+          requires:
+            - setup
+      - build:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - build
+  
