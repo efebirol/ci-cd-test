@@ -7,7 +7,7 @@ references:
   setup_container: &setup_container
     docker:
       - image: circleci/node:10.10.0
-    working_directory: ~/
+    working_directory: ~/repo
 
 # Each job is run in its own container
 # One task / pipline step per job is a good policy 
