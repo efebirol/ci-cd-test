@@ -47,7 +47,11 @@ workflows:
   # This workflow is triggered for all pushes
   pull_request:
     jobs:
-      - setup
+      - setup:
+          filters:
+            branches:
+              ignore:
+                - master
       - test:
           requires:
             - setup
