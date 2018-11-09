@@ -19,9 +19,9 @@ jobs:
     <<: *setup_container
     steps:
       - checkout # circle ci specific command to check out the current commit
-      - run: 
+      - run:
           name: Install dependencies
-          commmand: npm install # runs a shell command
+          command: npm install # runs a shell command
 
   # This job runs our (unit) tests
   test:
