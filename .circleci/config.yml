@@ -22,11 +22,16 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install # runs a shell command
+      - persist_to_workspace:
+          root: ~/repo
+          paths: ./*
 
   # This job runs our (unit) tests
   test:
     <<: *setup_container
     steps:
+      - attach_workspace:
+          at: ~/repo
       - run: npm run test
 
   # This job builds our application
