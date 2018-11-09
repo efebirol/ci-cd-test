@@ -4,6 +4,11 @@ version: 2
 # Reference small tasks or commands to re-use them in multiple jobs
 references:
   # Configure the base image to run the jobs in
+  setup_container_tests: &setup_container_tests
+    docker:
+      - image: circleci/node:10.10.0-browser
+    working_directory: ~/repo
+
   setup_container: &setup_container
     docker:
       - image: circleci/node:10.10.0
@@ -28,7 +33,7 @@ jobs:
 
   # This job runs our (unit) tests
   test:
-    <<: *setup_container
+    <<: *setup_container_tests
     steps:
       - attach_workspace:
           at: ~/repo
