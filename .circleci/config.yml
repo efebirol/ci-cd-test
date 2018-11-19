@@ -8,12 +8,12 @@ references:
   setup_container_tests: &setup_container_tests
     docker:
       - image: circleci/node:10.10.0    #node:10.10.0-browser
-    working_directory: /Users/birol/circletest
+    working_directory: ~/repo
 
   setup_container: &setup_container
     docker:
       - image: circleci/node:10.10.0
-    working_directory: ~/repo       #~/repo
+    working_directory: ~/repo       #/Users/birol/circletest
 
 # Each job is run in its own container
 # One task / pipline step per job is a good policy 
