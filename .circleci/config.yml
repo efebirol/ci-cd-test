@@ -7,13 +7,13 @@ references:
   # Configure the base image to run the jobs in
   setup_container_tests: &setup_container_tests
     docker:
-      - image: circleci/node:10.10.0-browser
-    working_directory: ~/repo
+      - image: circleci/node:10.10.0    #node:10.10.0-browser
+    working_directory: /Users/birol/circletest
 
   setup_container: &setup_container
     docker:
       - image: circleci/node:10.10.0
-    working_directory: ~/repo
+    working_directory: ~/repo       #~/repo
 
 # Each job is run in its own container
 # One task / pipline step per job is a good policy 
@@ -85,7 +85,7 @@ workflows:
             - build
   
 
-/** Sample .yml File - von der https://circleci.com/setup-project/gh/efebirol/ci-cd-test Seite - "Linux -> Node" ausgewählt */
+#Sample .yml File - von der https://circleci.com/setup-project/gh/efebirol/ci-cd-test Seite - "Linux -> Node" ausgewählt 
 
 # Javascript Node CircleCI 2.0 configuration file
 #
